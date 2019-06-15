@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="test">
+<head>
+    <meta charset="UTF-8">
+    <title>定时器</title>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+</head>
+<script>
+    var app=angular.module('test',[]);
+    app.controller("cont",function ($scope,$interval,$timeout) {
+      $scope.a=0;
+      $scope.b=0;
+      var time=$interval(function () {
+          $scope.a++;
+          if($scope.a==100){
+              // $interval.cancel(time);
+          }
+      },50);
+      //定时器
+      var timer=$timeout(function () {
+          $scope.b+=2;
+      },2000);
+    })
+</script>
+<body>
+<div ng-controller="cont" >
+    {{a}}
+    <br>
+    {{b}}
+</div>
+</body>
+</html>

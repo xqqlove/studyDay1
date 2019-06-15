@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="test">
+<head>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var app=angular.module('test',[]);
+        app.controller('contl',function ($scope,$http) {
+
+
+           $scope.items=[
+               {name:'你打野我打野',price:'3232.2'},
+               {name:'老自己爱还是',price:'332442'},
+               {name:'开发商开发见识到了福建省客服',price:'54645.0'}
+           ]
+        })
+    </script>
+</head>
+<body  ng-controller="contl">
+<input type="text" ng-model="src"/>
+<img ng-src="{{src}}"/>
+<li ng-repeat="item in items">
+    <h3>{{item.name}}</h3>
+    <span>{{item.price|currency}}</span>
+</li>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="test">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+</head>
+<style>
+    #div1 input{background: #007FBB;}
+    #div1 input.active{background: #D44950;}
+    #div1 div{width: 300px; height: 300px;background: #D44950;border: 1px solid black;}
+</style>
+
+<script>
+    var app=angular.module('test',[]);
+    app.controller("cont",function ($scope) {
+        $scope.now=0;
+        $scope.arr=[
+            {name:'电视',content:'klasdhkahdal'},
+            {name:'音乐',content:'哈哈哈哈'},
+            {name:'体育',content:'啦啦啦'}
+        ];
+        $scope.fn=function (n) {
+            $scope.now=n;
+        }
+    })
+</script>
+<body>
+<input>
+<div ng-controller="cont" >
+    <div id="div1">
+        <input ng-repeat="json in arr" type="button" value="{{json.name}}"
+        ng-click="fn($index)" class="{{now==$index?'active':''}}">
+        <div ng-repeat="json in arr"  ng-show="now==$index" >{{json.content}}</div>
+    </div>
+</div>
+</body>
+</html>

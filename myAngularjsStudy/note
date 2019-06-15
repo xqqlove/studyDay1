@@ -1,0 +1,71 @@
+angularjs  扩展html的功能 可扩展
+
+
+2 基本使用
+       MVC  （model模型 数据   View视图 表现层    Controller控制器 业务逻辑）
+
+ng-app="" 范围
+
+双向绑定--
+依赖注入：
+
+       函数-参数由调用方决定
+       依赖注入————参数由定义放决定
+
+模板：
+    {{ }}
+
+angualr和javascript不互通  1函数不互通 2变量都不互通 3事件也不互通
+Angular开发模式和传统开发模式完全不一样 只需要关注数据
+
+Angularjs:MVx框架，把数据，变现层 业务逻辑分离开 方便程序员--避免重复劳动（获取 事件）
+
+ng-model  数据，双向绑定
+ng-bind   输出
+ng-app    范围
+{{}}
+
+
+
+
+filter---过滤器
+
+class 两种写法
+   1 class="{{}}"
+   2 ng-class=""
+style 两种写法
+   1 style="{{}}"
+   2 ng-style="json"
+
+ng-if='条件'   删除元素
+
+ng-show      显示
+
+ng-hide       隐藏
+
+选项卡：
+
+
+控制器
+1数据
+
+ng-repeat 与ng-事件不能赋值 ，用函数
+
+Controller :桥梁
+
+
+1个页面里 有很多module
+1个module有很多controller
+
+2$scope 作用域对象
+    可添加 可获取
+    可监视
+    $scope.$watch('名称',function(){
+        //变化后的动作
+    },深度监视);
+
+3$http数据交互
+    $http.get(url,{params}).success(function(数据){}).error();
+    $http.post...
+    $http.jsonp(url,{params:{...,cb:'JSON_CALLBACK'}}).success().error();
+

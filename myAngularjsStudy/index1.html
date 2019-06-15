@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+</head>
+<style>
+    .box{width: 500px;height: 500px;background: #007FBB;}
+    .box1{width: 500px;height: 500px;background: #D44950;}
+</style>
+<body ng-init="arr=[12,14,42,43,54,64]">
+
+<div ng-repeat="v in arr" style="{{v%2==0?'background:yellow;':'' }}">
+  {{v}}
+</div>
+</body>
+</html>
