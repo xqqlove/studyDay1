@@ -26,10 +26,6 @@ ng-app    范围
 {{}}
 
 
-
-
-filter---过滤器
-
 class 两种写法
    1 class="{{}}"
    2 ng-class=""
@@ -68,4 +64,135 @@ Controller :桥梁
     $http.get(url,{params}).success(function(数据){}).error();
     $http.post...
     $http.jsonp(url,{params:{...,cb:'JSON_CALLBACK'}}).success().error();
+
+===============================================================================
+1 Angular : UI自动更新
+
+2 ng-app
+
+3 ng-model-----双向绑定
+
+4 {{}}----输出
+
+5 controller--数据代码
+
+filter---过滤器
+   1.输出之前处理数据
+   2.参数
+
+自定义过滤器
+app.filter('名字',function(){
+     //过滤器的代码
+});
+
+
+指令(directive)：'自定义标签，自定义组件'  增强HTML功能
+
+restrict: E(element) 元素
+          A(Attribute)属性
+          C(class) 类
+          M(comment) 注释 <!-- directive:abc -->  两边必须加空格必须加上 replace
+
+          replace: false true;
+          transclude: 嵌入<ng-transclude></ng-transclude>
+app.directive('名字',function(){
+    return {
+       restrict:'AEC',//单独混用都可以
+       template:'插入的内容'
+    };
+})
+<名字>
+<div 名字>
+<div class='名字'>
+==============================================================================
+--AngularJS 模块化技术
+
+  * *****************************************
+  * 模块化 ----1按需加载（用到什么加载什么）      *
+  *           2封装，隔离                     *
+  *           3依赖                          *
+  * *****************************************
+ 1定义模块：
+   var mod=angular.module('名称',[依赖模块]);
+
+   引用模块（使用调用模块）：
+   ng-app='名称'
+
+ 2 向模块中添加东西
+    mod.controller('名称',function);//适合：数据获取 整理 过滤  不适合：任何表现层功能
+    mod.filter('名称',function);//适合：简单的文本数据输出前处理 不适合：数据交互，任何复杂功能
+    mod.directive('名称',function);//适合：表现层功能组件  不适合 ：数据相关操作
+
+ 3 Controller继承
+   子Controller使用父Controller中的数据(父子关系体现在HTML中)
+
+
+
+===============================================================================
+自定义依赖注入
+例如：$scope,$http,$interval,$timeout
+
+创建依赖
+  1 app.factory('名字',function(){
+     return xxx;
+  });
+
+  //可配置的：
+  2 app.provider('名字',function(){
+      this.$get=function(){
+
+      }
+  })
+  3.服务--service
+    app.service('名字',function(){
+        this.xxxx
+    })
+  4.constant--常量（不可装饰）
+  app.constant('常量名',xxx);
+
+  5.value--变量
+  app.value('变量名',xxx)；
+
+------依赖装饰------------
+  会修改原来的依赖 ，原来的依赖就会改变
+
+  app.decorator('依赖的名字',function($delegate){
+      $delegate 依赖
+          操作依赖
+      return $delegate
+  })
+==============================================================================
+
+数据共享 在多个contoller之间
+1父子controller
+     $scope 作用域能继承  （不同步）
+
+消息机制（事件）
+    $scope.$emit('名字',数据);     触发 向上
+    $scope.broadcast('名字',数据); 触发 向下
+    $scope.$on('名字',数据);       接受
+
+
+2无关controller
+    用自定义的依赖来存储数据
+      factory service provider  ----创建的以来只有一个
+
+------------------------------------------------------------
+
+Router---多视图(分离多视图 多controller)
+    *根据url切换视图
+
+    例子：用户信息+文章列表+文章详情+配置页面
+
+    1引入
+    <script>
+    module('xxx',['ngRoute'])
+    2配置
+    app.config($routeProvider){
+      $routePrivider
+      .when{
+         templateUrl:'view地址',
+         controller:'controller名字'
+      }
+    }
 
