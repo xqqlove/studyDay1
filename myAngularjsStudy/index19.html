@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义依赖注入</title>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+    <script>
+        var app=angular.module('test',[]);
+
+        app.controller('cont',function ($scope) {
+            $scope.fn=function () {
+                $scope.$broadcast('testEvent',{a:12,b:13});
+            }
+        });
+        app.controller('cont1',function ($scope) {
+            //event---事件对象
+            //data--数据
+            $scope.$on('testEvent',function (event,data) {
+                console.log(event)
+                console.log(data)
+                alert('接收到事件');
+            })
+        });
+    </script>
+</head>
+<body >
+<div ng-controller="cont">
+    <a href="javascript:;" ng-click="fn()">触发</a>
+    <div ng-controller="cont1">
+        {{a}}
+    </div>
+</div>
+
+</body>
+</html>

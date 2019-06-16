@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义依赖注入</title>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+    <script>
+        var app=angular.module('test',[]);
+        app.factory('data',function () {
+            return {
+                a:0
+            };
+        })
+
+        app.controller('cont',function ($scope ,data) {
+            alert(data.a);
+        });
+        app.controller('cont1',function ($scope,data) {
+            alert(data.a);
+        });
+    </script>
+</head>
+<body >
+<div ng-controller="cont">
+</div>
+<div ng-controller="cont1">
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test">
+<head>
+    <meta charset="UTF-8">
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+    <title>下拉提示</title>
+</head>
+<script>
+    var app=angular.module('test',[]);
+    app.controller('cont',function ($scope) {
+        $scope.str='';
+        $scope.arr=['app','apple','beer','now','new','zoom','z-index'];
+    })
+
+    app.directive('dropdownlist',function () {
+        return {
+            restrict:'E',
+            template:'<ng-transclude></ng-transclude>' +
+                '<ul>' +
+                '<input type="text" ng-model="str"/>' +
+                '<li ng-repeat="v in arr" ng-show="v.indexOf(str)!=-1">{{v}}</li>' +
+                '</ul>',
+            transclude:true
+        }
+    })
+</script>
+
+<body ng-controller="cont">
+<!--<input type="text" ng-model="str"/>-->
+{{str}}
+<dropdownlist></dropdownlist>
+<ul>
+
+</ul>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <script src="lib/angularjs/angular.min.js" type="text/javascript"></script>
+</head>
+<script>
+    var app=angular.module('test',[]);
+    //定义指令
+
+    //a按照标签
+    app.directive('abc',function () {
+        var json={
+            restrict:'E',   //约束
+            template:'<span>abc</span>' //模板
+        }
+        return json;
+    });
+    //按照属性
+    app.directive('bca',function () {
+        var json={
+            restrict:'A',   //约束
+            template:'<span>abc</span>' //模板
+        }
+        return json;
+    });
+    // 按照class
+    app.directive('edc',function () {
+        var json={
+            restrict:'C',   //约束
+            template:'<span>abc</span>' //模板
+        }
+        return json;
+    });
+
+    // 按照注释
+    app.directive('dc',function () {
+        var json={
+            restrict:'M',   //约束
+            template:'<span>123456789</span>', //模板
+            replace:true
+        }
+        return json;
+    });
+
+    app.directive('myclose',function () {  //名字只能是英文数字
+        var json={
+            restrict:'A',
+            template:'<a href="javascript:;">x</a>'
+        }
+        return json;
+    });
+    app.directive('myclose2',function () {  //名字只能是英文数字
+        var json={
+            restrict:'A',
+            template:'<ng-transclude></ng-transclude></ng-transclude><a href="javascript:;">x</a>',
+            transclude:true
+        }
+        return json;
+    });
+
+    app.controller('cont',function ($scope,$http,$filter) {
+
+    });
+</script>
+
+<body ng-controller="cont">
+<abc></abc>
+<div bca=""></div>
+<div class="edc"></div>
+<!-- directive:dc -->
+
+<br><br>
+<ul>
+    <li myclose=""> restrict</li>
+    <li myclose=""> fsfsf</li>
+    <li myclose2="">53424</li>
+    <li> czxczc</li>
+</ul>
+</body>
+</html>
