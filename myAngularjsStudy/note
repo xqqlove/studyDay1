@@ -196,3 +196,18 @@ Router---多视图(分离多视图 多controller)
       }
     }
 
+
+    模板：
+      1.template
+          template:'模板HTML'
+      2.templateUrl:
+           templateUrl:'/.html'
+      3.ng-tempalte:
+           <script type='text/ng-template' id='ID'>
+                模板内容
+           </script>
+
+
+
+
+
