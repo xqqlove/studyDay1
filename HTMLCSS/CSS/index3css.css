@@ -1,0 +1,35 @@
+div{
+    font-size: 50px;
+    font-weight: normal;
+    font-style: normal;
+    font-family: Algerian;
+    color: rgb(254,00,254);
+    border: 1px solid black;
+    /*border-style:dotted;*/
+    border: 100px solid black;
+    width:0px;
+    height: 0px;
+    border-left-color: red;
+    border-right-color:green;
+    border-bottom-color: blue;
+    border-top-color: blueviolet;
+
+}
+/*
+   r       g       b 颜色代码
+
+  00-ff  00-ff   00-ff
+
+  #000000
+  #ffffff
+
+  rgb(0-255 ,0-255 ,0-255 )颜色代码
+*/
+/*
+颜色：
+  纯英文单词
+  颜色代码
+  颜色函数
+*/
+
+

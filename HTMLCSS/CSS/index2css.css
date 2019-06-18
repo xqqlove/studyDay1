@@ -1,0 +1,45 @@
+/*父子选择器 /派生选择器*/
+
+/*浏览器内部遍历父子选择器是从右向左*/
+
+div span{
+    background-color: red;
+}
+
+/*直接子元素选择器*/
+div > em{
+    background-color: #ff4400;
+}
+
+/*并列选择器*/
+div.demo{
+   background-color: blue;
+}
+
+/*浏览器权重相加,判断选择哪个*/
+
+/*100    1  10*/
+#idDiv p.classP{
+    background-color: red !important;
+}
+/*1    10     100*/
+div .classP#idp{
+    background-color: #ff4400;
+}
+
+
+/*分组选择器*/
+em,strong,span{
+    background-color: red;
+}
+
+.demo1{
+    background-color: #ff4400;
+}
+.demo2{
+    background-color: blue;
+}
+.demo1,.demo2{
+    width: 300px;
+    height: 400px;
+}

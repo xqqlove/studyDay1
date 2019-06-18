@@ -1,0 +1,31 @@
+div{
+    font-size: 20px;
+    border: 1px solid black;
+    text-align: left;
+    height: 210px;
+    line-height: 30px;
+    text-indent: 2em;
+     /*1em=1 font-size =20px*/
+}
+span{
+    text-decoration:underline;
+    color: rgb(0,0,238);
+    cursor: pointer;
+}
+del{
+    text-decoration:overline;
+    cursor: copy;
+}
+/*伪类选择器之一*/
+a{
+    text-decoration: underline;
+}
+a:hover{
+    background-color: #ff4400;
+    color: #fff;
+    font-size: 16px;
+    font-family: Arial;
+    font-weight: bold;
+    border-radius: 15px;
+    text-decoration: none;
+}

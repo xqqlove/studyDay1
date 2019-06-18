@@ -1,0 +1,50 @@
+
+
+
+
+主流浏览器以及内核
+
+
+     1.shell
+
+     2.内核
+
+======浏览器==================内核===================
+
+     IE                     trident
+
+     Firefox                 Gecko
+
+     Google chrome          Webkit/blink
+
+     Safari                 Webkit
+
+     Opera                  presto
+
+====================================================
+
+   html       css       javascript
+   结构        样式        行为
+
+====================================================
+
+CSS权重
+   !important        Infinity
+    行间样式            1000
+    id                 100
+    class|属性|伪类      10
+    标签|伪元素           1
+    通配符               0
+
+========================================================
+标签  1行级元素 (内联元素 inline)
+       ：内容决定元素所占位置
+       不可以通过css改变宽高
+      span strong em a del
+     2块级元素 block
+       ：独占一行
+       可以通过css改变宽高
+       div p ul li ol form address
+     3行级块元素 （inline-block）
+       内容决定大小，可以改变宽高
+       <img>

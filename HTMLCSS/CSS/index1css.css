@@ -1,0 +1,22 @@
+#only{
+    background-color: #ff4400;
+}
+.demo1{
+    background-color: darkgreen;
+}
+
+.demo{
+    color: darkcyan;
+}
+span{
+    color: red;
+}
+*{
+    background-color: #999999;
+}
+[id='only']{
+
+}
+[class='jask']{
+
+}
