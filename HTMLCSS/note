@@ -48,3 +48,10 @@ CSS权重
      3行级块元素 （inline-block）
        内容决定大小，可以改变宽高
        <img>
+
+盒子模型：
+
+   盒子壁 border
+   内边距 padding
+   盒子内容 width+height
+

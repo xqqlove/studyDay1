@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.wrapper{
+    border: 1px solid blue;
+}
+.demo{
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    float: left;
+    margin: 10px;
+    color: white;
+}
+p{
+    border-top:1px solid #ff4400;
+    clear: both;
+}
