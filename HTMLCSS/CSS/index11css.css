@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+.list-item{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.mav .list-item{
+    margin: 0 5px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+
+}
+ul::after{
+    content: "";
+    clear: both;
+    display: block;
+
+}
+.mav .list-item a{
+    padding: 0 5px;
+    color: #ff4400;
+    height: 30px;
+    display: inline-block;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.mav .list-item a:hover{
+    background-color: #ff4400;
+    color: white;
+}

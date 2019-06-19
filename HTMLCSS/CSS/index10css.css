@@ -1,0 +1,18 @@
+/*伪元素*/
+span::before{
+    content:"成哥";
+    display:inline-block;
+    width: 100px;
+    height: 100px;
+    background-color: #ff4400;
+}
+/*clear生效必须得是块级元素*/
+span::after{
+    content:"啊哈哈哈";
+    clear: both;
+    display: block;
+}
+
+/*position:absolute;*/
+/*float:left/right;*/
+/*打内部把元素转换为inline-block*/

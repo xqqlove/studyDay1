@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+p{
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid black;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+a{
+    display: inline-block;
+    text-decoration: none;
+    width: 14px;
+    height: 60px;
+    border: 1px solid black;
+    background-image: url(https://img.alicdn.com/tfs/TB1_uT8a5ERMeJjSspiXXbZLFXa-143-59.png);
+    text-indent: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
