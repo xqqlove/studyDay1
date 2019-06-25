@@ -6,3 +6,6 @@
 
 //引用值 堆数据
 //  array Object function ...date RegExp
+
+var x=true;
+x.constructor

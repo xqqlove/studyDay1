@@ -7,19 +7,30 @@
 </head>
 <body>
  <script>
-   var a=1,
-       a=2,
-       b=2,
-       c=3,
-       d=4,
-       e='轻轻的我走了'
-   document.write(f);
-   document.write(a,b,c,d,e);
+     "use strict"
+
+     function callSomeFunction(someFunction,someArgument){
+         return someFunction(someArgument)
+     }
+
+
+     function add(num){
+         return num+10;
+     }
+
+     function getGreeting(name){
+         return "hello"+name;
+     }
+
+     //调用
+     var result=callSomeFunction(add,10)
+     alert(result)//20
+
+     var result1=callSomeFunction(getGreeting,"qingqiang");
+
+     alert(result1)//hello qiangqiag
  </script>
 
- <script>
-     document.write('ewqeq',e);
 
- </script>
 </body>
 </html>

@@ -16,39 +16,300 @@
 ===========================在HTML中使用JavaScript===================================================================================
 
      1<script>元素
-          元素包含六个属性：1.async：立即下载脚本，但不妨碍页面其他操作
+
+         元素包含六个属性：1.async：立即下载脚本，但不妨碍页面其他操作
                          2.charset 标识通过src属性指定代码的字符集
                          3.defer 脚本可以延迟到文档被完全解析或显示之后在执行
                          4.src 包含要执行代码的外部文件
                          5.type 编写代码使用的脚本语言的内容类型
-          1.1.使用<script>元素的两种方式：直接在页面中嵌入，包含外部js文件
+         1.1.使用<script>元素的两种方式：直接在页面中嵌入，包含外部js文件
 
               *包含在<script>元素内部的js代码自上而下依次解释，并且解释器对<script>元素内部的所有代码求值完毕之前（包括下载外部js文件），页面中的其余内容都不会被浏览器加载或者显示
               <script>元素还可以通过src包含外域的js文件，指向当前html页面之外的某个域完整的url：
                     <script type="text/javascript" src="https://www.hjkh.com.afile.js" ></script>
               只要不出现async和defer浏览器会依照<script>元素出现的顺序 依次解析js文件
-          1.2.标签的位置
+         1.2.标签的位置
 
               *一般放在<body>
                          <这里是页面内容>
                          <script src=""></script>
                       </body>
                  因为如果放在<head>元素内，以为这必须等到全部的JavaScript文件依次 被下载 解析 执行完成以后才开始呈现页面内容，势必会有延迟
-          1.3延迟脚本 defer="defer" 监本被延迟到整个页面解析完成后在运行，立即下载，延迟执行。
-          1.4异步脚本 async属性 只用于外部脚本 并告诉浏览器立即下载 ，不保证两个<script> 执行先后顺序
+         1.3延迟脚本 defer="defer" 监本被延迟到整个页面解析完成后在运行，立即下载，延迟执行。
+         1.4异步脚本 async属性 只用于外部脚本 并告诉浏览器立即下载 ，不保证两个<script> 执行先后顺序
 
      2<noscript>元素
           当浏览器不支持javascript时 可以让页面平稳退化
-           以下两种情况,nocsript元素包含的内容才会被显示出来
+          以下两种情况,noscript元素包含的内容才会被显示出来
             a.浏览器不支持脚本
             b.浏览器支持脚本但脚本被禁用
 
      ===================================基本概念=================================================================================
 
       1.语法
+            1.1 严格模式：
+            1.2 数据类型： Undefined Null Boolean Number String Object
+               --Number 表示整数和浮点数 ,数值范围Number.MAX_VALUE  Number.MIN_VALUE超出范围为Infinity
+               --NaN （非数值）是一个特殊数值  alert（NaN==NaN） false
+               --数值转换 Number()可以用于任何数据类型
+                        ParseInt() ParseFloat()制转换字符串
 
-      2.数据类型
+               --String ECMAScript规定字符串一旦创建不可变 ，要改变某个变量保存的字符串 首先要销毁原来的字符串，
+               然后再创建一个包含新值的字符串填充该变量
+               --转换为字符串  toString()  除了undefined 和null 其他类型都有toString()方法
 
-      3.流程控制语句
+               --Object类型 ：一组数据和功能的组合 Object类型所具有的任何属性和方法 也存在于更具体的对象中
+                   属性方法： constructor hasOwnProperty(propertyName) isPrototypeOf(Object)
+                            propertyIsEnumberable(propotyName) toLocalString() toString() valueOf()
 
-      4函数
+            1.3 for-in 语句 用来枚举对象中的属性
+
+            1.4 label语句 label语句可以在代码中添加标签  label:statement
+                start:
+                  for(var i=0;i<cont;i++){
+                     for(var j=0;j<10;j++){
+                     if(){
+                        break start;
+                        }
+                     }
+                }
+                break和continue语句可以和label联合使用 从而返回到代码特定的位置
+
+      2 函数
+
+          function functionName(arg0,arg1,....argn){
+             statement;
+          }
+        --理解参数：
+           ECMAScript的参数在内部使用一个数组表示的 函数接受的始终是这个数组，不用关心数组中包含的参数个数
+           可以通过arguments对象访问参数数组
+           ---例 function howManyArgs(){
+                    alert(arguments.length);
+                 }
+                 howManyArgs('hja',232);
+              ECMAScript没有函数的重载 但可以使用传入参数的不同和arguments对象的使用实现重载的效果，根据参数的不同得到不同的结果
+
+
+===============================变量，作用域和内存问题========================================================================
+
+      1.基本类型和引用类型的值
+         再将一个值赋值给变量时，解析器必须确定这个值是基本数据类型还是引用数据类型
+        --基本数据类型复制：（基本类型的值在内存中占据固定大小的空间，因此保存在栈内存） 创建新对象复制值到新对象内存
+          引用数据类型复制：（堆内存） 创建新变量 复制指向这个对象的指针到新内存中
+
+          确定一个值是那种基本类型使用 typeof  确定一个值是那种引用类型使用instanceof
+
+        --传递参数：函数参数是按值传递的，基本类型参数传递如同基本数据类型变量的复制
+                  引用类型值传递和引用类型变量复制一样
+                  也就是说基本变量的传值复制值到arguments数组中的某一个元素，而引用类型是将地址赋值给arguments某一元素
+
+      2.执行环境（全局和函数执行环境）和作用域
+
+           执行环境：定义了变量和函数有权访问的其他数据，每个执行环境都有一个与之关联的变量对象，
+           环境中定义的所有变量和函数都保存在这个对象中。编写代码无法访问此对象，但解析器处理数据
+           时会在后台使用他
+
+           每次进入一个新的执行环境都会创建一个用于搜索变量和函数的作用域链
+
+        --全局对象是最外围的执行环境，根据ECMAScript的宿主环境的不同，表示执行环境的对象也不相同。
+        web浏览器中，全局对象是window只有当关闭网页或者浏览器 全局执行环境才会被销毁。每个函数都有
+        自己的执行环境，当执行流进入一个函数后，函数的环境就被推入一个环境栈中，而在函数执行之后将其弹出。
+        --当代码在一个环境中执行时，会创建变量对象的一个作用域链  ，作用于链的用途是保证对执行环境可以访问的
+          所有变量和函数有序访问，作用域链的前端始终是执行代码所在环境的变量对象。
+
+        --延长作用域try-catch语句catch块和with语句
+          执行环境类型总两类  全局和局部（函数）
+        --没有块级作用域
+             例如-
+               if（true）{
+                 var color=‘blue’
+               }
+               alert（color）
+             在其它语言中，color会在if语句执行完毕后销毁，js语言中会将变量添加到当前的执行环境中。
+             * var声明的变量会自动添加到最接近的环境中。
+
+      3.垃圾收集
+
+        js具有自动的垃圾收集机制，执行环境会负责管理代码执行过程中使用的内存，垃圾收集器会周期性的执行，释放
+          不用的内存
+
+        用于标识无用变量的策略通常浏览器实现中有两种方法：标记清除和引用计数
+
+=================================引用类型======================================================
+
+      引用类型的值是引用类型的一个实例，在ECMAscript中，引用类型是一种数据结构，用于将数据和功能组织到一起，
+
+      1.Object类型
+        创建：(1)var person=new Person();
+                person.name='dssda';
+             (2)对象字面量表示法：
+                var person={
+                               name:'hello',
+                               age:'78'
+                            }
+              或
+              var person={}
+              person.name='huihis'
+        访问属性，person.name 或 person['name']
+
+      2Array类型
+        ECMAscript的数组是数据的有序列表，每一项可以保存任何的数据类型，数组大小动态调整，随数据添加自动增长
+
+        创建（1）new Array()  或 new Array('red','green','dada');
+            (2)字面量  var person=['blue' ,'grren','red']
+            访问或替换数组的值 person[0]='yellow' person[3]='black'索引超出了数组现有项数，数组会自动增加
+            至该索引加1的长度
+
+            length属性，不只是只读，可以通过设置这个属性，从数组的末尾移除项或向数组中添加新项
+               var color=['sd','qw']
+               color.length=4；向数组中color末尾添加两项，
+               color[length]='dsad'数组末尾自增一项并赋值，length属性自动更新
+
+        检测数组: vaues instanceof Array    或者   Array.isArray(values)
+        转换方法：color.toString()
+                color.valueOf();
+                color.join('符号')  都会转换为逗号分隔字符串
+        栈方法：push()推入 pop()删除 两方法实现栈的行为
+        队列方法 ： push()末尾推入 shift()移除第一项实现队列的行为
+        重排序方法：revserse() sort();
+                  var values=[0,1,5,10,15];
+                  values.reverse()//15,10,5,1,0
+                  values.sort()//1,1,10,15,5
+                  为实现排序sort()方法会调用每个数组项的toString()方法，先转换为字符串，然后比较字符串所以出现以上结果
+                  ，因此为了实现真正排序 sort()接受一个比较函数作为参数
+
+                  function compare(value1,value2){
+                     if(value1>value2) return 1
+                     else if(value1<value2) return -1
+                     else return 0
+                  }
+
+                  values.sort(compare) //0,1,5,10,15
+        迭代方法：ECMAScript维数组定义了五个迭代方法，every(),filter(),forEach(),map(),some()
+
+      3.Date类型  new Date()
+
+      4.RegExp类型
+
+        var expression=/pattern/flags;
+
+        g:(global)表示全局模式，即模式将被引用于所有的字符串，而非第一个匹配项停止
+
+        i:匹配项忽略大小写
+
+        m：多行模式
+
+      5*Function类型
+        在ECMAScript中，函数实际上是一个对象，每个函数都是Function类型的实例，与其他引用类型一样具有属性和方法
+        函数名是一个指向函数对象的指针
+
+        --1.定义函数：
+           （1）函数声明语法定义：function sum(num1,num2){
+                                 return sum1+sum2;
+                              };
+           (2) 函数表达式定义函数：var sum=function(sum1,sum2){
+                                           return sum1+sum2;
+                                         };
+           (3)Function 构造函数法：var sum=new Function('num1','num2','return sum1+sum2');
+              最后一个参数必须是函数体，此法不推荐
+
+        --2.没有重载（深入理解）
+          为什么不能重载 ，因为函数是对象，函数名其实是指向函数的指针，那么两个同名函数，虽然参数不同也就
+          是同一个变量 ，后边定义的函数会覆盖前面的函数对象，指针会指向后面定义的函数如下：
+
+                var addsom=function(num){   |    function addsom(num){
+                   return num+100;          |       return num+100;
+                }                           |      }
+
+                addsom=function(num){       |    function addsom(num){
+                   return num+200;          |      return num+200;
+                }                           |    }
+          可以看出变量addsom最终指向第二个人函数对象。
+
+          ***这里可以用函数的参数属性，arguments 通过判断参数的不同，实现不同逻辑来弥补js没有重载的缺憾
+
+        --3函数声明和表达式的区别
+
+          解析器在执行环境中加载数据时，会率先读取函数声明，并使其在执行任何代码之前可用，而对于函数表达式
+          必须等解析器执行到他所执行的代码行才会解释执行 p112
+
+          alert(sum(10,20));   //30
+          function sum(num1,num2){
+            return num1+num2;
+          }
+
+          alert(sum(10,20));   //错误
+           var sum= function(num1,num2){
+             return num1+num2;
+          }
+        --4作为值的函数：
+           ECMAScript中函数名是变量，函数可以做为值来使用，可以当参数传递，也可以作为结果返回
+
+           function callSomeFunction(someFunction,someArgument){
+               return someFunction(someArgument)
+           }
+           第一个传函数，第二个个传函数的值
+
+           function add（num）{
+             return num+10;
+           }
+
+           function getGreeting(name){
+              return "hello"+name;
+           }
+
+           //调用
+           var result=callSomeFunction(add,10)
+           alert(result)//20
+
+           var result1=callSomeFunction(getGreeting,"qingqiang");
+
+           alert(result1)//hello qiangqiag
+
+        --5 函数内部属性 arguments 和 this
+
+           arguments属性，是一个类数组对象，包含着传入函数的所有参数，并且arguments对象有一个callee属性
+           该属性是个指针，指向拥有这个arguments对象的函数
+
+             实现阶乘例子
+
+            //传统方法 （要是引用函数用了其他名字 此方法无效，使用arguments.callee无影响）
+
+             function factorial(num){
+               if(num<=1){
+                  return 1;
+               } else {
+                  return num * factorial(num-1);
+               }
+             }
+            //使用arguments.callee
+
+             function factorial(num){
+               if(num<1){
+                return 1;
+               } else {
+                 return num * arguments.callee(num-1);
+               }
+             }
+
+           this引用的是函数执行的环境对象
+
+             window.color='red'
+
+             var o={color :blue}；
+
+             function sayColor(){
+               alert(this.color)  //red 此时this值的是全局对象 window
+             }
+
+             o.sayColor=sayColor;
+             o.sayColor()  //blue  //this 引用对象o
+
+        --6 函数的属性和方法 ******************p116重要
+           ECMAScript函数是对象，则有属性和方法
+             1，length  propotype(ECMAS中引用类型的propotype属性包含对象所有实例方法)
+
+             2，每个函数包含 apply() 和call()方法，在特定的作用域中调用方法，等于设置函数体内this值
+
+      6.基本包装类型（浏览书118）
+
