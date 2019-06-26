@@ -313,3 +313,279 @@
 
       6.基本包装类型（浏览书118）
 
+============================面向对象程序设计==================================================
+
+      ECMAScript对象的定义为：无序属性的集合，其属性可以包括基本值，对象或者函数（可以认为对象认为是散列表
+                          也即使一组名值对，其中值可以是数据或是函数）
+
+      1对象定义：创建对象最简单的是创建一个Object实例，然后再添加属性方法
+
+        (1)var person=new Object();
+           person.name='qiangqiang';
+           person.age='78'
+           person.sayName=function(){
+             alert(this.name);
+           }
+        (2)对象字面量创建
+           var person={
+              name:'qiangqiang',
+              age:'23',
+              sayName:function(){
+                  alert(this.name);
+              }
+           }
+      2属性类型：
+        ECMAScript中两种属性：数据属性和访问器属性
+          数据属性包含数据值的位置，在这个属性中可以读取和写入值，有4个描述其行为的特性。
+          访问器属性不包含数据值，包含一对getter和setter函数，在读取属性时调用getter在访问属性会调用setter
+          包含4个特性。
+
+        （1）数据属性：Configurable,Enumerable,Writable,Value
+         如上面直接在对象上定义属性， 对象每个属性的Configurable,Enumerable,Writable 特性默认为true
+         Value被设置为特定值。
+          ---要修改数据默认属性特性，必须用Object.defineProperty()方法
+          --例
+             var person={}
+             Object.definePeoperty(person,name,{
+                writable:false,
+                value:'hello'
+             })
+
+             alert(person.name);//hello
+             person.name='Greg';
+             alert(person.name)//hello
+
+         (2)访问器属性：Configurable,Enumerable,Get,Set   p141
+
+            --例
+              var book={
+                _year:2004,
+                edition:1
+              }
+              Object.defineProperty(book,'year',{
+                get:function(){
+                   return this._year;
+                }
+                set:function(newValue){
+                   if(newValue>2004){
+                      this._year=newValue;
+                      this.edition+=newValue-2004;
+                   }
+                }
+              });
+
+              book.year=2005;
+              alert(book.edition);//2
+
+      3.定义多个属性和访问属性特性  p144
+         利用Object.defineProperties()方法定义多个属性
+         --例
+            var book={}
+            Object.definePropeties(book,{
+                _year:{
+                  writable:true,
+                  value:2004
+                },  //数据属性
+                edition:{
+                  writable:true,
+                  value:1
+                },//数据属性
+
+                year:{
+                  set:function(newValue){
+                     if(newValue>2004){
+                       this._year=newValue;
+                       this.edition+=newValue-2004;
+                     }
+                  }
+                  get:function(){
+                     return this._year;
+                  }
+                }
+            })
+
+            使用ECMAScript的Object.getOwnPropertyDescriptor()可以去的给定属性的描述符
+
+            ---例
+               var description=Object.getOwnPropertyDescriptor(book,"_year");
+               alert(description.value);//2004
+               alert(description.configurable);//false
+
+
+      4创建对象
+         虽然Object构造函数或者对象字面量都可以创造单个对象，但是使用一个接口创建很多对象，会产生大量的重复代码
+
+        (1)工厂模式：
+               function createPerson(name,age,job){
+                    var o=new Object();
+                    o.name=name;
+                    o.age=age;
+                    o.job=job;
+                    o.sayName:function(){
+                      alert(this.name);
+                    }
+                    return o;
+               }
+             var person1=createPerson('qq',78,'software Engineer');
+             var person2=createPerson('xx',687,'Dpoctor');
+
+             工厂方法不能解决对象识别问题 即不知道对象类型，因此延伸出构造函数模式方法
+
+        (2)构造函数模式：
+            除了ECMAScript原生特定类型对象如Array 和Object有原生构造函数，我们也可以创建自定义构造函数，
+            定义自定义对象类型的属性和方法
+
+            --例
+               function Person(name,age,job){
+                  this.name=name;
+                  this.age=age;
+                  this.iob=job;
+                  this.sayName=function(){
+                      alert(this.name);
+                  }
+               }
+            var person1=new Person('qq','322','dassadas');
+            创建person实例：（1）创建新对象（2）将构造函数的作用域赋给新对象（3）执行构造函数中的代码（4）返回新对象
+
+            person1指向Person的一个实例，并且有constructor属性指向Person
+            alert(person1.construct=Person);
+            上面例子中创建的对象，即是Object实例也是Person实例
+
+            ***将构造函数当做函数
+
+                构造函数和其它函数唯一的不同在于调用的方式不同，任何函数只要通过new操作符来调用，那么它就可以作为构造函数
+                任何函数包括之前定义的Person构造函数 只要不通过new操作符调用那他也和普通函数一样
+
+                //当做构造函数调用
+                    var person = new Person('hkja',678,'kshaldh');
+                    person.sayName();//hkja
+                //作为普通函数调用
+                    Person('Grey','546','doctor');
+                    window.sayName();//添加到window
+                //在另一个作用域调用
+                    var o=new Object();
+                    Person.call(o,'kristen',25,'23dada');
+                    o.sayName();//  kristen
+
+            ***构造函数模式存在缺点：每个方法在每个实例上重新创建一遍，所以不同实例对象上的同名方法是不一样的
+            对象[ 如上面的sayName()]然而创建两个一样的函数完全没必要，为解决这种问题，延伸出原型模式
+
+
+        (3)原型模式：（原生引用类型Object Array String采用此模式创建）
+
+            我们创建的每一个函数都有一个prototype（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的
+            用途是包含可以由特定类型的所有实例共享的属性和方法。也就是说prototype是通过调用构造函数创建的那个对象的
+            原型对象。使用原型对象好处让所有的对象实例共享其属性和方法
+
+            --例
+              function Person(){}
+              Person.prototype.name='qq';
+              Person.prototype.age='26';
+              Person.prototype.job='software engineer';
+              Person.prototype.sayName=function(){
+                 alert(this.name);
+              }
+
+              var person1=new Person();
+              person1.sayName();//qq
+
+              var person2=new Person();
+              person2.sayName();//qq
+
+              alert(person1.sayName==person2.sayName);//true
+
+             ****理解原型对象：p148
+                无论何时，只要创建一个新函数，就会为该函数创建一个prototype属性，并指向函数的原型对象，所有原型对象
+                都会自动获取一个constructor属性，此属性是一个指向prototype属性所在函数的指针
+                  也即 Person.prototype.constructor->Person
+
+                当代码读取某个对象的某个属性时，都会执行一次搜索，首先从本对象实例本身开始，如果有给定名字的属性直接返回
+                否则，继续搜索指针指向的原型对象，查找改名字的属性值
+
+                --例
+                               function Person(){}
+                               Person.prototype.name='qq';
+                               Person.prototype.age='26';
+                               Person.prototype.job='software engineer';
+                               Person.prototype.sayName=function(){
+                                  alert(this.name);
+                               }
+
+                                var person1=new Person();
+                                person1.sayName();//qq
+
+                                var person2=new Person();
+                                person1.name='grey'
+                                alert(person1.name)//grey  来自实例
+                                alert(person2.name)//qq  来自原型
+
+
+             ***更简洁的原型语法
+
+                function Person(){}
+
+                Person.prototype={
+                   name:'qq',
+                   age:27,
+                   job:'software engineer',
+                   sayName:function(){
+                     alert(this.name);
+                   }
+                }
+
+               在上面的代码中，Person.prototype设置为等于一个以字面量形式创建的新对象，最终结果和上面原型模式
+               一样，但是由于没创建一个函数就回创建一个原型对象并且自动获取constructor属性，而我们这里使用的语法本质上
+               是重写了磨人的prototype属性，因此constructor变成新对象的constructor指向Object构造函数
+
+             ***原型动态性p156
+
+               var friend=new Person();
+               Person.prototype.sayHi=function(){alert("hi")}
+               friend.sayHi();//hi
+
+                var friend=new Person();
+                Person.prototype={
+                   constructor:Person;
+                   name:'qq',
+                   age:34,
+                   job:'software engineer'
+                   sayName:function(){
+                     alert(this.name);
+                   }
+                }
+                friend.sayHi();//error 出错！！！
+
+                函数Person内部指针指向用字面量定义新创建的原型对象
+                实例中的指针指向函数自动生成的最初的原型对象，所以报错。详情见p157
+
+            ****原型模式缺点：如果远新对象中的属性包含的是引用类型的值 ，那么在一个实例对象中改变了此属性值其他实例
+                           都会改变。
+
+
+        (4)组合使用构造函数模式和原型模式（目前ECMAScript自定义类型使用最广泛的模式）
+
+           function Person(name,age,job){
+             this.name=name;
+             this.age=age;
+             this.job=job;
+             this.friends=['nn','yy'];
+           }
+
+           Person.prototype={
+             constructor:Person,
+             sayName:function(){
+                alert(this.name);
+             }
+           }
+
+        (5)动态原型模式
+
+        (6)寄生构造函数模式
+
+        (7)稳妥构造函数模式
+
+
+      5.继承
+
+
+
