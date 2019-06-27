@@ -587,5 +587,101 @@
 
       5.继承
 
+        (1)原型链实现继承  p162
 
+             将一个类型的实例赋给另一个构造函数的原型实现的。
+
+          function superObj(){
+            this.name='qq';
+          }
+
+          superObj.prototype.getSuperObj=function(){
+             return this.name;
+          }
+
+          function subObj(){
+             tis.subName='xx';
+          }
+
+          //继承superObj
+
+          subObj.prototype=new superObj();
+          subObj.prototype.getSubObj=function(){
+             return this.subName;
+          }
+
+          var instance=new subObj();
+          alert(instance.getSuperObj);//qiangqiang
+
+        **所有函数的默认原型其实都是Object的实例
+          通过原型链实现继承不能用对象字面量创建原型方法，
+          引用类型值的原型属性会被所有实例共享（原型链问题1）因为所有实例的默认指针指向同一个原型对象
+          --例如
+            function father(){
+              this.color=['red','green','yellow']
+            }
+            father.prototype.getColor=function{
+               alert(this.color.toString);
+            }
+            function kid(){}
+            kid.prototype=new father();
+
+            var instance1=new kid();
+            var instance2=new kid();
+
+            也就是说上面的代码中，instance1和instance2实例内部的[[prototype]]指针指向相同的原型对象，也即是new father()实例
+            这个对象中的color对象是个数组实例，那么，通过instance1或instance2改变color的属性后其他的对象也都变 这就是原型链继承最大缺陷
+
+        （2）借用构造函数的方法实现继承，解决上面缺陷
+
+            这种方法为在子类型的构造函数内部调用超类型构造函数，由于在ECMAScript函数为在特定环境中执行代码的对象，因此通过使用
+            apply()和call()方法也可以在新对象上执行构造函数
+             --例
+               function superObj(name){
+                 var color=['red','green','yellow'];
+                 this.name=name;
+               }
+               function subObj(){
+                  subObj.call(this,'qiangqiang');
+               }
+
+               var instance=new subObj();
+               var instance2=new subObj();
+               alert(instance.name);//qiangqiang
+
+               由于每个实例都有自己的color副本 所以两个实例不会同时影响color对象属性
+
+         (3)组合继承（将原型链和借用构造函数的技术结合到一起）
+
+            思路：使用原型链来实现对原型属性和方法的继承，而通过借用构造函数来实现对实例的继承
+
+            function superType(name){
+             this.name=name;
+             this.colors=['red','green','yellow'];
+            }
+
+            superType.prototype.sayName=function(){
+              alert(this.name);
+            }
+
+            function subType(name,age){
+              this.age=age;
+              继承实例属性
+              superType.call(this,name);
+            }
+            //继承方法
+            subType.prototype=new superType();
+            subType.prototype.constructor=subType;
+
+            var instance =new subType();
+
+            这样instance实例就对超类型实例继承，每个实例中都有colors副本，不从在操作实力出现修改同一个对象属性的缺陷
+            并且对原型对象公用的方法也继承了原型中的方法
+
+         (4)原型式继承
+         (5)寄生式继承
+         (6)寄生组合式继承
+
+
+  ==============================================函数表达式======================================================
 

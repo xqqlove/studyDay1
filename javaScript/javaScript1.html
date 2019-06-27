@@ -7,28 +7,28 @@
 </head>
 <body>
  <script>
-     "use strict"
 
-     function callSomeFunction(someFunction,someArgument){
-         return someFunction(someArgument)
+
+
+
+     function superType(name){
+         this.name=name;
+         this.colors=['red','green','yellow'];
      }
 
-
-     function add(num){
-         return num+10;
+     superType.prototype.sayName=function(){
+         alert(this.name);
      }
 
-     function getGreeting(name){
-         return "hello"+name;
+     function subType(name,age){
+         this.age=age;
+         // 继承实例属性
+         superType.call(this,name);
      }
-
-     //调用
-     var result=callSomeFunction(add,10)
-     alert(result)//20
-
-     var result1=callSomeFunction(getGreeting,"qingqiang");
-
-     alert(result1)//hello qiangqiag
+     //继承方法
+     subType.prototype=new superType();
+     subType.prototype.constructor=subType;
+     var instance =new subType('qq',34);
  </script>
 
 
